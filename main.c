@@ -4,30 +4,60 @@
 #include <stdio.h>
 #include <unistd.h>
 
+/*
+** This function specifically is made to detect the longest
+** item name so I can display regular ls on one line
+*/
+
 int		longestitem(char *str, int i)
 {
 	static int longest;
 
-	while(str[i] != '\0')
+	while (str[i] != '\0')
 		i++;
 	if (i > longest)
 		longest = i;
 	return (longest);
 }
 
+int		ft_strlen(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
+}
+
 int		ls(char *str, int maxlength, int colsize)
 {
 	struct dirent	*d;
 	DIR				*dir;
+	int				precision;
+	int				pbytes;
 
-	printf("%d\n%d\n", maxlength, colsize);
-	// if ((dir = opendir(str)) == NULL)
-	// 	return (0);
-	// while ((d = readdir(dir)))
-	// {
-	// 	printf("%s\n", d->d_name);
-	// }
+	precision = (colsize / maxlength); // number of dir to be displayed in one line
+	// colsize is equal to the total terminal length
+	// maxlength is the longest dir size
+	printf("%d\n%d\n%d\n", maxlength, colsize, precision);
+	if ((dir = opendir(str)) == NULL)
+		return (0);
+	while ((d = readdir(dir)))
+	{
+
+		// printf("%s\n", d->d_name);
+	}
 }
+
+/*
+** This function does two important thing. First, it gets max and w.ws_col
+** which is necessary for default ls where items are displayed in one line.
+** w.ws_col will provide me the info on the terminal col length, while max
+** will be equal to the longest item length, this way I can calculate
+** how many items can be pasted on one line (w.ws_col / max) and
+** also print out the width necessary to make them all line up neatly
+*/
 
 int		setup(char *str)
 {
