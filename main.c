@@ -4,84 +4,66 @@
 #include <stdio.h>
 #include <unistd.h>
 
-/*
-** This function specifically is made to detect the longest
-** item name so I can display regular ls on one line. Static
-** is used so I never lose track of the largest int that I do
-** end up getting for the item through this function
-** NOTE: Commented out, turns out ls by itself is not necessary to do
-** row format, leaving this here in the event I choose to finish it
-*/
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	while (*s1 == *s2 && *s1 != '\0' && *s2 != '\0')
+	{
+		s1++;
+		s2++;
+	}
+	if (*s1 == '\0' && *s2 == '\0')
+		return (1);
+	return (0);
+}
 
-// int		longestitem(char *str, int i)
-// {
-// 	static int longest;
-
-// 	while (str[i] != '\0')
-// 		i++;
-// 	if (i > longest)
-// 		longest = i;
-// 	return (longest);
-// }
-
-// int		ft_strlen(char *str)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	while (str[i] != '\0')
-// 		i++;
-// 	return (i);
-// }
-
-int		ls(char *str, char *find)
+int		ls(char *str, char *find, int fprint)
 {
 	struct dirent	*d;
 	DIR				*dir;
 
 	if ((dir = opendir(str)) == NULL)
-		return (0);
+	{
+		dir = opendir(".");
+		if (dir == NULL)
+			return (0);
+	}
 	while ((d = readdir(dir)))
 	{
 		// printf("find %s str %s\n", find, d->d_name);
 		if(find == NULL && d->d_name[0] != '.')
 			printf("%s\n", d->d_name);
-		else if (find == d->d_name)
+		else if ((ft_strcmp(d->d_name, find)) && d->d_name[0] != '.')
+		{
 			printf("%s\n", d->d_name);
+			fprint = 1;
+		}
 	}
+	if (fprint == 0 && find != NULL)
+		printf("ft_ls: cannot access '%s': No such file or directory\n", find);
 }
 
-/*
-** This function does two important thing. First, it gets max and w.ws_col
-** which is necessary for default ls where items are displayed in one line.
-** w.ws_col will provide me the info on the terminal col length, while max
-** will be equal to the longest item length, this way I can calculate
-** how many items can be pasted on one line (w.ws_col / max) and
-** also print out the width necessary to make them all line up neatly
-** NOTE: Commented out, turns out ls by itself is not necessary to do
-** row format, leaving this here in the event I choose to finish it
-*/
-
-// int		setup(char *str)
+// int		simple_ls(char *str)
 // {
-//     struct winsize	w;
-// 	int				max;
 // 	struct dirent	*d;
 // 	DIR				*dir;
-	
-// 	if ((dir = opendir(str)) == NULL)
+// 	char			*cmp;
+
+// 	dir = opendir(str);
+// 	if (dir == NULL)
 // 		return (0);
 // 	while ((d = readdir(dir)))
-// 		max = longestitem(d->d_name, 0);
-// 	ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
-// 	ls(str, max, w.ws_col);
+// 	{
+// 		cmp = d->d_name;
+// 		if(cmp[0] != '.' && cmp[0] != '\0')
+// 			printf("%s\n", cmp);
+// 	}
 // }
 
 void	parse_flag(char *str, char *find)
 {
-	str[0] == '-' && str[1] == '1' ? ls(".", find) : 0;
-	str[0] == '-' && str[1] == 'R' ? ls(str, find) : 0;
-	str[0] != '-' ? ls(str, find) : 0;
+	str[0] == '-' && str[1] == '1' ? ls(str, find, 0) : 0;
+	str[0] == '-' && str[1] == 'R' ? ls(str, find, 0) : 0;
+	str[0] != '-' ? ls(str, find, 0) : 0;
 }
 
 int		main(int ac, char **av)
@@ -93,9 +75,9 @@ int		main(int ac, char **av)
 		else
 			parse_flag(av[1], NULL);
 	}
-	else
+	else if (ac > 2)
 	{
-		while(--ac > 1)
+		while(ac-- > 1)
 			parse_flag(av[1], av[ac]);
 	}
 	return (0);
