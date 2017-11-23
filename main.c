@@ -41,20 +41,28 @@ int	ft_strcmp(const char *s1, const char *s2)
 // 	closedir(dir);
 // }
 
+
+
 int		ls(char *str)
 {
 	struct dirent	*d;
 	DIR				*dir;
-	char			*cmp;
+	char			**list;
+	int				i;
 
-	dir = opendir(str);
-	if (dir == NULL)
+	list = (char**)malloc(sizeof(char**) + 1);
+	i = 0;
+	if ((dir = opendir(str)) == NULL)
 		return (0);
 	while ((d = readdir(dir)))
 	{
-		cmp = d->d_name;
-		if(cmp[0] != '.' && cmp[0] != '\0')
-			printf("%s\n", cmp);
+		if(d->d_name[0] != '.' && d->d_name[0] != '\0')
+		{
+			list[i] = (char*)malloc(sizeof(char*) + 1);
+			list[i] = d->d_name;
+			printf("%s list[%i]\n", list[i], i);
+			i++;
+		}
 	}
 }
 
@@ -74,10 +82,10 @@ int		main(int ac, char **av)
 		else
 			parse_flag(av[1], NULL);
 	}
-	else if (ac > 2)
-	{
-		while(ac-- > 1)
-			parse_flag(av[1], av[ac]);
-	}
+	// else if (ac >= 3)
+	// {
+	// 	while(ac-- > 1)
+	// 		parse_flag(av[1], av[ac]);
+	// }
 	return (0);
 }
