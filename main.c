@@ -41,25 +41,58 @@ int	ft_strcmp(const char *s1, const char *s2)
 // 	closedir(dir);
 // }
 
+void	ft_bzero(void *s, size_t n)
+{
+	while (n > 0)
+		((unsigned char *)s)[--n] = 0;
+}
 
+void	*ft_memalloc(size_t size)
+{
+	char	*ptr;
+
+	if (size <= 0)
+		return (NULL);
+	ptr = (char *)malloc(size * sizeof(*ptr));
+	ft_bzero(ptr, size);
+	return ((void *)ptr);
+}
+
+
+char	*ft_strcpy(char *s1, const char *s2)
+{
+	int		i;
+
+	i = 0;
+	while (s2[i] != '\0')
+	{
+		s1[i] = s2[i];
+		i += 1;
+	}
+	s1[i] = '\0';
+	return (s1);
+}
 
 int		ls(char *str)
 {
 	struct dirent	*d;
 	DIR				*dir;
 	char			**list;
+	int 			i;
 
+	i = 0;
+	// list = ft_memalloc(sizeof(char**));
 	dir = opendir(str);
 	if (dir == NULL)
 		return (0);
 	while ((d = readdir(dir)))
 	{
-		*list = d->d_name;
-		printf("%s [%i]\n", *list, i);
+		list[i] = ft_memalloc(sizeof(char*));
+		// list[i] = ft_strcpy(list[i], d->d_name);
+		list[i] = d->d_name;
+		printf("%s\n", list[i]);
 		i++;
-		*list++;
 	}
-	*list = NULL;
 }
 
 void	parse_flag(char *str, char *find)
