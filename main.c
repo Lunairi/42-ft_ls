@@ -48,22 +48,18 @@ int		ls(char *str)
 	struct dirent	*d;
 	DIR				*dir;
 	char			**list;
-	int				i;
 
-	list = (char**)malloc(sizeof(char**) + 1);
-	i = 0;
-	if ((dir = opendir(str)) == NULL)
+	dir = opendir(str);
+	if (dir == NULL)
 		return (0);
 	while ((d = readdir(dir)))
 	{
-		if(d->d_name[0] != '.' && d->d_name[0] != '\0')
-		{
-			list[i] = (char*)malloc(sizeof(char*) + 1);
-			list[i] = d->d_name;
-			printf("%s list[%i]\n", list[i], i);
-			i++;
-		}
+		*list = d->d_name;
+		printf("%s [%i]\n", *list, i);
+		i++;
+		*list++;
 	}
+	*list = NULL;
 }
 
 void	parse_flag(char *str, char *find)
