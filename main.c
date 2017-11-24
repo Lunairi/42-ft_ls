@@ -78,28 +78,27 @@ int		ls(char *str)
 	struct dirent	*d;
 	DIR				*dir;
 	char			**list;
-	int 			i;
 
-	i = 0;
-	// list = ft_memalloc(sizeof(char**));
+	list = (char**)ft_memalloc(sizeof(char**)*99999);
 	dir = opendir(str);
 	if (dir == NULL)
 		return (0);
 	while ((d = readdir(dir)))
 	{
-		list[i] = ft_memalloc(sizeof(char*));
+		*list = (char*)ft_memalloc(sizeof(char*)*99999);
 		// list[i] = ft_strcpy(list[i], d->d_name);
-		list[i] = d->d_name;
-		printf("%s\n", list[i]);
-		i++;
+		*list = d->d_name;
+		printf("%s\n", *list);
+		*list++;
 	}
 }
 
 void	parse_flag(char *str, char *find)
 {
 	(void)find;
-	str[0] == '-' && str[1] == '1' ? ls(str) : 0;
-	str[0] != '-' ? ls(str) : 0;
+	// str[0] == '-' && str[1] == '1' ? ls(str) : 0;
+	// str[0] != '-' ? ls(str) : 0;
+	ls(str);
 }
 
 int		main(int ac, char **av)
