@@ -1,13 +1,13 @@
 # 42-ft_ls
 First unix/system branch project. Recreate ls functionality in terminal with C. In progress (because filler has binaries that doesn't work on my laptop while I'm in vegas sadly). Have no experience with anything in dirent.h library, lots of learning
 
-Day 1 (About 3~4 hours)
+Day 1 (About 3 hours)
 - Completed: N/A
 - Incomplete: -R, -t, basic sorting algorithm, sort hidden items, sort upper/lower
 - In Progress: -1, -a, -r
 - Notes: Learned about opendir() readdir() closedir(), trying to mimic ls -1, ls -1 -a and ls -1 -r
 
-Day 2 (About 3-4 hours)
+Day 2 (About 4 hours)
 - Completed: Basic output of opendir
 - Incomplete: -R, -t, sort hidden items, sort upper/lower
 - In Progress: -1, -a, -r, basic sorting algorithm
