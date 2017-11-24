@@ -15,14 +15,14 @@ Day 2 (About 4 hours)
 
 Day 3 (In Progress)
 - Completed: Basic output, basic sorting algorithm, sort hidden items
-- Incomplette: -R, -t, handle multiple argv
+- Incomplete: -R, -t, handle multiple argv
 - In Progress: -1, -a, -r, sort upper/lower
 - Note: Until I finalize handle multiple argv I won't consider any -commands completed, currently working on basic output with simple argv before transitioning into mutliple argv which will require me to use more of the functions below
 
 New Functions Learning List:
-- opendir (completed)
-- readdir (completed)
-- closedir (completed)
+- ~opendir (studied and used)~
+- ~readdir (studied and used)~
+- closedir (studied, not yet used)
 - stat (studied, not yet used)
 - lstat (studied, not yet used)
 - getpwuid (did not study yet)
