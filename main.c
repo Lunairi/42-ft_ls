@@ -12,15 +12,37 @@ int	ft_tolower(int c)
 		return (c);
 }
 
-int	ft_strcmp(const char *s1, const char *s2)
+int		ft_isupper(int c)
 {
-	int i;
+	if (c >= 'A' && c <= 'Z')
+		return (1);
+	else
+		return (0);
+}
+
+size_t		ft_strlen(const char *s)
+{
+	size_t		i;
 
 	i = 0;
-	while (ft_tolower(s1[i]) == ft_tolower(s2[i])
-			&& s1[i] != '\0' && s2[i] != '\0')
+	while (*(s + i))
 		i++;
-	return (ft_tolower(s1[i]) - ft_tolower(s2[i]));
+	return (i);
+}
+
+int	ft_strcmpl(const char *s1, const char *s2)
+{
+	while (*s1 == '.' && *s1 != '\0')
+		*s1++;
+	while (*s2 == '.' && *s2 != '\0')
+		*s2++;
+	while (ft_tolower(*s1) == ft_tolower(*s2)
+			&& *s1 != '\0' && *s2 != '\0')
+	{
+		*s1++;
+		*s2++;
+	}
+	return (ft_tolower(*s1) - ft_tolower(*s2));
 }
 
 // int		ls(char *str, char *find, int fprint)
@@ -102,7 +124,16 @@ int	ft_isalnum(int c)
 
 int		sort_list(char *one, char *two)
 {
-	return (ft_strcmp(one, two));
+	return (ft_strcmpl(one, two));
+}
+
+void	swap_item(char **one, char **two)
+{
+	char *tmp;
+
+	tmp = *one;
+	*one = *two;
+	*two = tmp;
 }
 
 void	printsort(char **list, int size)
@@ -119,13 +150,14 @@ void	printsort(char **list, int size)
 		// printf("i - %i || size - %i\n", i, size);
 		if ((list[i + 1] != NULL))
 		{
-			if(ft_strcmp(list[i + 1], list[i]) < 0)
+			if(ft_strcmpl(list[i + 1], list[i]) < 0)
 			{
 				// printf("%d for %s and %s\n", ft_strcmp(list[i + 1], list[i]), list[i + 1], list[i]);
 				// printf("%s %s\n", list[i + 1], list[i]);
-				tmp = list[i];
-				list[i] = list[i + 1];
-				list[i + 1] = tmp;
+				swap_item(&list[i], &list[i + 1]);
+				// tmp = list[i];
+				// list[i] = list[i + 1];
+				// list[i + 1] = tmp;
 				count = 1;
 			}
 			else
@@ -136,10 +168,12 @@ void	printsort(char **list, int size)
 	}
 	if (count == 0)
 	{
+		// For reversing . and ..
+		swap_item(&list[0], &list[1]);
 		i = 0;
 		while (i < size)
 		{
-			if (list[i][0] != '.')
+			// if (list[i][0] != '.')
 				printf("%s\n", list[i]);
 			i++;
 		}
