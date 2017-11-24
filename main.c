@@ -273,6 +273,7 @@ void	print_one(char **list, int size)
 
 void	print_sort(char **list, int size, int type)
 {
+	// this wont work, will have to use a toggle system and scan the entire argvs coming in
 	type == 1 ? print_one(list, size) : 0;
 	type == 2 ? print_r(list, size) : 0;
 	type == 3 ? print_a(list, size) : 0;
