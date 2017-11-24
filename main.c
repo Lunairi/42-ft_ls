@@ -30,8 +30,29 @@ size_t		ft_strlen(const char *s)
 	return (i);
 }
 
+int	check_upper(const char *s1, const char *s2)
+{
+	// printf("%c %c \n", *s1, *s2);
+	while ((ft_tolower(*s1) == ft_tolower(*s2))
+			&& (*s1 != '\0') && (*s2 != '\0'))
+	{
+		printf("%c %c \n", *s1, *s2);
+		if (ft_isupper(*s1))
+			return (-1);
+		else
+		{
+			*s1++;
+			*s2++;
+		}
+	}
+	return (0);
+}
+
 int	ft_strcmpl(const char *s1, const char *s2)
 {
+	int i;
+
+	i = 0;
 	while (*s1 == '.' && *s1 != '\0')
 		*s1++;
 	while (*s2 == '.' && *s2 != '\0')
@@ -42,6 +63,8 @@ int	ft_strcmpl(const char *s1, const char *s2)
 		*s1++;
 		*s2++;
 	}
+	if (check_upper(s1, s2))
+		return 1;
 	return (ft_tolower(*s1) - ft_tolower(*s2));
 }
 
@@ -173,7 +196,7 @@ void	printsort(char **list, int size)
 		i = 0;
 		while (i < size)
 		{
-			// if (list[i][0] != '.')
+			if (list[i][0] != '.')
 				printf("%s\n", list[i]);
 			i++;
 		}
