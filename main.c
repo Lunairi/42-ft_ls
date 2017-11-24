@@ -38,7 +38,7 @@ int	check_upper(const char *s1, const char *s2)
 	{
 		printf("%c %c \n", *s1, *s2);
 		if (ft_isupper(*s1))
-			return (-1);
+			return (1);
 		else
 		{
 			*s1++;
@@ -64,7 +64,7 @@ int	ft_strcmpl(const char *s1, const char *s2)
 		*s2++;
 	}
 	if (check_upper(s1, s2))
-		return 1;
+		return -1;
 	return (ft_tolower(*s1) - ft_tolower(*s2));
 }
 
@@ -159,7 +159,7 @@ void	swap_item(char **one, char **two)
 	*two = tmp;
 }
 
-void	printsort(char **list, int size)
+void	print_r(char **list, int size)
 {
 	int 	i;
 	char 	*tmp;
@@ -167,20 +167,86 @@ void	printsort(char **list, int size)
 
 	i = 0;
 	count = 0;
-	// tmp = (char*)ft_memalloc(sizeof(char*)*99999);
 	while (i < size)
 	{
-		// printf("i - %i || size - %i\n", i, size);
 		if ((list[i + 1] != NULL))
 		{
 			if(ft_strcmpl(list[i + 1], list[i]) < 0)
 			{
-				// printf("%d for %s and %s\n", ft_strcmp(list[i + 1], list[i]), list[i + 1], list[i]);
-				// printf("%s %s\n", list[i + 1], list[i]);
 				swap_item(&list[i], &list[i + 1]);
-				// tmp = list[i];
-				// list[i] = list[i + 1];
-				// list[i + 1] = tmp;
+				count = 1;
+			}
+			else
+				i++;
+		}
+		else
+			i++;
+	}
+	if (count == 0)
+	{
+		// For reversing . and ..
+		swap_item(&list[0], &list[1]);
+		i = size - 1;
+		while (i >= 0)
+		{
+			if (list[i][0] != '.')
+				printf("%s\n", list[i]);
+			i--;
+		}
+	}
+	else
+		print_r(list, size);
+}
+
+void	print_a(char **list, int size)
+{
+	int 	i;
+	char 	*tmp;
+	int		count;
+
+	i = 0;
+	count = 0;
+	while (i < size)
+	{
+		if ((list[i + 1] != NULL))
+		{
+			if(ft_strcmpl(list[i + 1], list[i]) < 0)
+			{
+				swap_item(&list[i], &list[i + 1]);
+				count = 1;
+			}
+			else
+				i++;
+		}
+		else
+			i++;
+	}
+	if (count == 0)
+	{
+		swap_item(&list[0], &list[1]);
+		i = -1;
+		while (++i < size)
+			printf("%s\n", list[i]);
+	}
+	else
+		print_a(list, size);
+}
+
+void	print_one(char **list, int size)
+{
+	int 	i;
+	char 	*tmp;
+	int		count;
+
+	i = 0;
+	count = 0;
+	while (i < size)
+	{
+		if ((list[i + 1] != NULL))
+		{
+			if(ft_strcmpl(list[i + 1], list[i]) < 0)
+			{
+				swap_item(&list[i], &list[i + 1]);
 				count = 1;
 			}
 			else
@@ -202,10 +268,17 @@ void	printsort(char **list, int size)
 		}
 	}
 	else
-		printsort(list, size);
+		print_one(list, size);
 }
 
-int		ls_one(char *str)
+void	print_sort(char **list, int size, int type)
+{
+	type == 1 ? print_one(list, size) : 0;
+	type == 2 ? print_r(list, size) : 0;
+	type == 3 ? print_a(list, size) : 0;
+}
+
+int		ls_single(char *str, int type)
 {
 	struct dirent	*d;
 	DIR				*dir;
@@ -225,25 +298,30 @@ int		ls_one(char *str)
 		// printf("%s\n", *list);
 		i++;
 	}
-	printsort(list, i);
+	print_sort(list, i, type);
+	free(list);
 }
 
-void	parse_flag(char *str, char *find)
+void	parse_single(char *flag, char *search)
 {
-	(void)find;
-	str[0] == '-' && str[1] == '1' ? ls_one(str) : 0;
-	str[0] != '-' ? ls_one(str) : 0;
+	// printf("flag %s, search %s", flag, search);
+	flag[0] == '-' && flag[1] == '1' ? ls_single(search, 1) : 0;
+	flag[0] == '-' && flag[1] == 'r' ? ls_single(search, 2) : 0;
+	flag[0] == '-' && flag[1] == 'a' ? ls_single(search, 3) : 0;
+	flag[0] != '-' ? ls_single(search, 1) : 0;
 	// ls(str);
 }
 
 int		main(int ac, char **av)
 {
-	if(ac < 3 || av[1] == NULL)
+	if(ac < 4)
 	{
 		if (av[1] == NULL)
-			parse_flag(".", NULL);
+			parse_single(".", ".");
+		else if (av[2] == NULL)
+			parse_single(av[1], ".");
 		else
-			parse_flag(av[1], NULL);
+			parse_single(av[1], av[2]);
 	}
 	// else if (ac >= 3)
 	// {
