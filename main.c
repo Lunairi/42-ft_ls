@@ -225,6 +225,26 @@ void	print_one(char **list, int size, t_flags *toggle)
 // 	type == 3 ? print_a(list, size) : 0;
 // }
 
+int		item_amount(char *str)
+{
+	struct dirent	*d;
+	DIR				*dir;
+	int				i;
+
+	i = 0;
+	dir = opendir(str);
+	if (dir == NULL)
+	{
+		// need to discern between dir and file for display or error, will do later
+		printf("ft_ls: cannot access '%s': No such file or directory\n", str);
+		return (0);
+	}
+	while ((d = readdir(dir)))
+		i++;
+	closedir(dir);
+	return (i + 1);
+}
+
 int		ls_single(char *str, t_flags *toggle)
 {
 	struct dirent	*d;
@@ -233,7 +253,7 @@ int		ls_single(char *str, t_flags *toggle)
 	int				i;
 
 	i = 0;
-	list = (char**)ft_memalloc(sizeof(char**)*99999);
+	list = (char**)ft_memalloc(sizeof(char*) * item_amount(str));
 	dir = opendir(str);
 	if (dir == NULL)
 	{
@@ -243,7 +263,7 @@ int		ls_single(char *str, t_flags *toggle)
 	}
 	while ((d = readdir(dir)))
 	{
-		list[i] = (char*)ft_memalloc(sizeof(char*)*99999);
+		list[i] = ft_memalloc(sizeof(str) + 1);
 		// list[i] = ft_strcpy(list[i], d->d_name);
 		list[i] = d->d_name;
 		// printf("%s\n", *list);
