@@ -4,19 +4,19 @@ First unix/system branch project. Recreate ls functionality in terminal with C. 
 Day 1 (About 3 hours)
 - Completed: N/A
 - Incomplete: -R, -t, basic sorting algorithm, sort hidden items, sort upper/lower
-- In Progress: -1, -a, -r
+- In Progress: -l, -a, -r
 - Notes: Learned about opendir() readdir() closedir(), trying to mimic ls -1, ls -1 -a and ls -1 -r
 
 Day 2 (About 4 hours)
 - Completed: Basic output of opendir
 - Incomplete: -R, -t, sort hidden items, sort upper/lower
-- In Progress: -1, -a, -r, basic sorting algorithm
+- In Progress: -l, -a, -r, basic sorting algorithm
 - Notes: At the moment can only handle no additional argv, will need to use stat() and lstat() later to discern directories/files to handle multiple argv
 
 Day 3 (About 6 hours)
 - Completed: Basic output, basic sorting algorithm, sort hidden items
 - Incomplete: -R, -t
-- In Progress: -1, -a, -r, sort upper/lower, kind of handling multiple argv
+- In Progress: -l, -a, -r, sort upper/lower, kind of handling multiple argv
 - Note: Until I finalize handle multiple argv I won't consider any -commands completed, currently working on basic output with simple argv before transitioning into mutliple argv which will require me to use more of the functions below. Will have to rewrite how I parse flags and make it more of a toggle system where I check every argv due to how flags can be used in any order and mixed to do multiple results. Standardly, -a shows hidden files, -r reverses search, -1 is the default for our ls project, -R is recursive to check every directory, and -t orders by time. Because each of these flags affects eachother will write a switchboard toggling function that allows me to prioritize -1 first, -a will toggle hidden files to print in my print function, -r will cause the i value used to print to be reversed, -t and -R will be worked on separately. Bigger progress today, hopefully will have more time to flush out more.
 
 New Functions Learning List:
