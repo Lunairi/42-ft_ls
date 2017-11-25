@@ -16,8 +16,8 @@ Day 2 (About 4 hours)
 Day 3 (About 10 hours)
 - Completed: Basic output, basic sorting algorithm, sort hidden items, --help, customized flag system, -1, -a, -r, handle multiple argv
 - Incomplete: N/A
-- In Progress: -l, sort upper/lower, -t, -R
-- Note: Thanks to cyildiri was able to fix a heap overflow, re-optimized my reading to avoid reading too far. Fixed all leak and freed all memory, valgrind shows no leak and -fsanitize=address has no issue. Fully implemented a multi parser and single parser being able to handle any number of flags. Print/sort is universal and works with both multi and single. Only need to work on -l, -t, -R and make sure that they can fit without too much issue, will have to delve into the function list below to pull info and parse/store info to make -l work. I think -l and -t will be my main priority, my setup is already recursive and I don't see myself having problems doing -R.
+- In Progress: -l, sort upper/lower, -t, -R, error handling for multi files/dir
+- Note: Thanks to cyildiri was able to fix a heap overflow, re-optimized my reading to avoid reading too far. Fixed all leak and freed all memory, valgrind shows no leak and -fsanitize=address has no issue. Fully implemented a multi parser and single parser being able to handle any number of flags. Print/sort is universal and works with both multi and single. Only need to work on -l, -t, -R and make sure that they can fit without too much issue, will have to delve into the function list below to pull info and parse/store info to make -l work. I think -l and -t will be my main priority, my setup is already recursive and I don't see myself having problems doing -R. Also forgot need to mimic ls error for multiple files/dir.
 
 New Functions Learning List:
 - ~opendir (studied and used)~
