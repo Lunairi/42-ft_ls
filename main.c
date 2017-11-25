@@ -9,7 +9,6 @@ typedef struct	s_flags
 	int 		r;
 	int			a;
 	int			l;
-	int			search;
 	int			t;
 }				t_flags;
 
@@ -230,12 +229,13 @@ int		ls_single(char *str, t_flags *toggle)
 	dir = opendir(str);
 	while ((d = readdir(dir)))
 	{
-		list[i] = ft_memalloc(sizeof(str) + 1);
+		// list[i] = ft_memalloc(sizeof(str) - sizeof(char*));
 		list[i] = d->d_name;
 		i++;
 	}
 	sort_recursive(list, i, toggle);
 	free(list);
+	closedir(dir);
 }
 
 int		parse_single(char *flag, char *search)
@@ -255,6 +255,7 @@ int		parse_single(char *flag, char *search)
 	flag[0] == '-' && flag[1] == 'r' ? toggle->r = 1 : 0;
 	flag[0] == '-' && flag[1] == 'a' ? toggle->a = 1 : 0;
 	ls_single(search, toggle);
+	free(toggle);
 }
 
 void	help_ls()
@@ -286,10 +287,13 @@ int		parse_multi(int ac, char **av)
 	t_flags	*toggle;
 	char	**search;
 	int 	i;
+	int		exist;
 
+	search = (char**)ft_memalloc(sizeof(char*) * (ac - 1));
 	toggle = ft_memalloc(sizeof(t_flags));
-	search = (char**)ft_memalloc(sizeof(char*) * (ac + 1));
+	// printf("%p toggle | %p search\n", toggle, search);
 	i = 1;
+	exist = 0;
 	while (av[i])
 	{
 		if(av[i][0] == '-')
@@ -305,14 +309,27 @@ int		parse_multi(int ac, char **av)
 		av[i][0] == '-' && av[i][1] == 'a' ? toggle->a = 1 : 0;
 		if (av[i][0] != '-')
 		{
-			*search = ft_memalloc(sizeof(av[i]) + 1);
+			if (*search != NULL)
+				*search++;
+			// *search = ft_memalloc(sizeof(av[i]) - sizeof(char*));
 			*search = av[i];
-			printf("args, %s\n", *search);
-			*search++;
+			exist++;
 		}
 		i++;
 	}
-	printf("r %i - a %d", toggle->r, toggle->a);
+	if (exist == 0)
+	{
+		*search = ".";
+		exist++;
+	}
+	i = 0;
+	while (i < exist)
+	{
+		ls_single(search[i], toggle);
+		i++;
+	}
+	free(search);
+	free(toggle);
 }
 
 int		main(int ac, char **av)
