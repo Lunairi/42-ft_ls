@@ -41,7 +41,6 @@ size_t		ft_strlen(const char *s)
 
 int	check_upper(const char *s1, const char *s2)
 {
-	// printf("%c %c \n", *s1, *s2);
 	while ((ft_tolower(*s1) == ft_tolower(*s2))
 			&& (*s1 != '\0') && (*s2 != '\0'))
 	{
@@ -76,31 +75,6 @@ int	ft_strcmpl(const char *s1, const char *s2)
 		return -1;
 	return (ft_tolower(*s1) - ft_tolower(*s2));
 }
-
-// int		ls(char *str, char *find, int fprint)
-// {
-// 	struct dirent	*d;
-// 	DIR				*dir;
-
-// 	if ((dir = opendir(".")) == NULL)
-// 	{
-// 			return (0);
-// 	}
-// 	while ((d = readdir(dir)))
-// 	{
-// 		// printf("find %s str %s\n", find, d->d_name);
-// 		if(find == NULL && d->d_name[0] != '.')
-// 			printf("%s\n", d->d_name);
-// 		else if ((ft_strcmp(d->d_name, find)) && d->d_name[0] != '.')
-// 		{
-// 			printf("%s\n", d->d_name);
-// 			fprint = 1;
-// 		}
-// 	}
-// 	if (fprint == 0 && find != NULL)
-// 		printf("ft_ls: cannot access '%s': No such file or directory\n", find);
-// 	closedir(dir);
-// }
 
 void	ft_bzero(void *s, size_t n)
 {
@@ -283,11 +257,6 @@ int		parse_single(char *flag, char *search)
 	ls_single(search, toggle);
 }
 
-void	parse_multi(char*flag, char *searc)
-{
-	printf("Currently in test");
-}
-
 void	help_ls()
 {
 	printf("Usage: ft_ls [OPTION]... [FILE]...\n");
@@ -312,9 +281,42 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return ((unsigned char)*s1 - (unsigned char)*s2);
 }
 
+int		parse_multi(int ac, char **av)
+{
+	t_flags	*toggle;
+	char	**search;
+	int 	i;
+
+	toggle = ft_memalloc(sizeof(t_flags));
+	search = (char**)ft_memalloc(sizeof(char*) * (ac + 1));
+	i = 1;
+	while (av[i])
+	{
+		if(av[i][0] == '-')
+		{
+			if (av[i][1] != 'r' && av[i][1] != 'a' && av[i][1] != '1')	
+			{
+				printf("ls: invalid option -- '%c'\n", av[i][1]);
+				printf("Try 'ft_ls --help' for more information.\n");
+				return (0);
+			}
+		}
+		av[i][0] == '-' && av[i][1] == 'r' ? toggle->r = 1 : 0;
+		av[i][0] == '-' && av[i][1] == 'a' ? toggle->a = 1 : 0;
+		if (av[i][0] != '-')
+		{
+			*search = ft_memalloc(sizeof(av[i]) + 1);
+			*search = av[i];
+			printf("args, %s\n", *search);
+			*search++;
+		}
+		i++;
+	}
+	printf("r %i - a %d", toggle->r, toggle->a);
+}
+
 int		main(int ac, char **av)
 {
-	(void)ac;
 	if (av[1] == NULL)
 		parse_single(".", ".");
 	else if (!(ft_strcmp(av[1], "--help")))
@@ -324,13 +326,6 @@ int		main(int ac, char **av)
 	else if (av[2] == NULL)
 		parse_single(".", av[1]);
 	else
-	{
-		parse_multi(av[1], av[2]);
-	}
-	// else if (ac >= 3)
-	// {
-	// 	while(ac-- > 1)
-	// 		parse_flag(av[1], av[ac]);
-	// }
+		parse_multi(ac, av);
 	return (0);
 }
