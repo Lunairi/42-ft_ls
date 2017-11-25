@@ -251,16 +251,13 @@ int		ls_single(char *str, t_flags *toggle)
 	DIR				*dir;
 	char			**list;
 	int				i;
+	int				item;
 
 	i = 0;
-	list = (char**)ft_memalloc(sizeof(char*) * item_amount(str));
-	dir = opendir(str);
-	if (dir == NULL)
-	{
-		// need to discern between dir and file for display or error, will do later
-		printf("ft_ls: cannot access '%s': No such file or directory\n", str);
+	if (!(item = item_amount(str))) // if return 0 it means directory couldn't open
 		return (0);
-	}
+	list = (char**)ft_memalloc(sizeof(char*) * item);
+	dir = opendir(str);
 	while ((d = readdir(dir)))
 	{
 		list[i] = ft_memalloc(sizeof(str) + 1);
