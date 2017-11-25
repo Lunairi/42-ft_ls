@@ -168,79 +168,6 @@ void	swap_item(char **one, char **two)
 	*two = tmp;
 }
 
-void	print_r(char **list, int size)
-{
-	int 	i;
-	char 	*tmp;
-	int		count;
-
-	i = 0;
-	count = 0;
-	while (i < size)
-	{
-		if ((list[i + 1] != NULL))
-		{
-			if(ft_strcmpl(list[i + 1], list[i]) < 0)
-			{
-				swap_item(&list[i], &list[i + 1]);
-				count = 1;
-			}
-			else
-				i++;
-		}
-		else
-			i++;
-	}
-	if (count == 0)
-	{
-		// For reversing . and ..
-		swap_item(&list[0], &list[1]);
-		i = size - 1;
-		while (i >= 0)
-		{
-			if (list[i][0] != '.')
-				printf("%s\n", list[i]);
-			i--;
-		}
-	}
-	else
-		print_r(list, size);
-}
-
-void	print_a(char **list, int size)
-{
-	int 	i;
-	char 	*tmp;
-	int		count;
-
-	i = 0;
-	count = 0;
-	while (i < size)
-	{
-		if ((list[i + 1] != NULL))
-		{
-			if(ft_strcmpl(list[i + 1], list[i]) < 0)
-			{
-				swap_item(&list[i], &list[i + 1]);
-				count = 1;
-			}
-			else
-				i++;
-		}
-		else
-			i++;
-	}
-	if (count == 0)
-	{
-		swap_item(&list[0], &list[1]);
-		i = -1;
-		while (++i < size)
-			printf("%s\n", list[i]);
-	}
-	else
-		print_a(list, size);
-}
-
 void	print_one(char **list, int size, t_flags *toggle)
 {
 	int 	i;
@@ -274,15 +201,15 @@ void	print_one(char **list, int size, t_flags *toggle)
 			i = 0;
 		while (i < size)
 		{
-			if (list[i][0] != '.' && toggle->a == 0)
+			if (list[i][0] != '.' && toggle->a == 0) // will not print hidden files
 				printf("%s\n", list[i]);
-			if (toggle->a == 1)
+			if (toggle->a == 1) // will print hidden files
 				printf("%s\n", list[i]);
 			if (toggle->r == 1)
 				i--;
 			else
 				i++;
-			if (i == -1)
+			if (i == -1) // really not needed but lazy way of handling r reverse counting down without two print function
 				i = size;
 		}
 	}
