@@ -168,7 +168,31 @@ void	swap_item(char **one, char **two)
 	*two = tmp;
 }
 
-void	print_one(char **list, int size, t_flags *toggle)
+void	print_list(char **list, int size, t_flags *toggle)
+{
+	int i;
+
+	swap_item(&list[0], &list[1]); // For reversing . and ..
+	if (toggle->r == 1)
+		i = size - 1;
+	else
+		i = 0;
+	while (i < size)
+	{
+		if (list[i][0] != '.' && toggle->a == 0) // will not print hidden files
+			printf("%s\n", list[i]);
+		if (toggle->a == 1) // will print hidden files
+			printf("%s\n", list[i]);
+		if (toggle->r == 1)
+			i--;
+		else
+			i++;
+		if (i == -1) // really not needed but lazy way of handling r reverse counting down without two print function
+			i = size;
+	}
+}
+
+void	sort_recursive(char **list, int size, t_flags *toggle)
 {
 	int 	i;
 	char 	*tmp;
@@ -192,38 +216,10 @@ void	print_one(char **list, int size, t_flags *toggle)
 			i++;
 	}
 	if (count == 0)
-	{
-		// For reversing . and ..
-		swap_item(&list[0], &list[1]);
-		if (toggle->r == 1)
-			i = size - 1;
-		else
-			i = 0;
-		while (i < size)
-		{
-			if (list[i][0] != '.' && toggle->a == 0) // will not print hidden files
-				printf("%s\n", list[i]);
-			if (toggle->a == 1) // will print hidden files
-				printf("%s\n", list[i]);
-			if (toggle->r == 1)
-				i--;
-			else
-				i++;
-			if (i == -1) // really not needed but lazy way of handling r reverse counting down without two print function
-				i = size;
-		}
-	}
+		print_list(list, size, toggle);
 	else
-		print_one(list, size, toggle);
+		sort_recursive(list, size, toggle);
 }
-
-// void	print_sort(char **list, int size, int type)
-// {
-// 	// this wont work, will have to use a toggle system and scan the entire argvs coming in
-// 	type == 1 ? print_one(list, size) : 0;
-// 	type == 2 ? print_r(list, size) : 0;
-// 	type == 3 ? print_a(list, size) : 0;
-// }
 
 int		item_amount(char *str)
 {
@@ -261,12 +257,10 @@ int		ls_single(char *str, t_flags *toggle)
 	while ((d = readdir(dir)))
 	{
 		list[i] = ft_memalloc(sizeof(str) + 1);
-		// list[i] = ft_strcpy(list[i], d->d_name);
 		list[i] = d->d_name;
-		// printf("%s\n", *list);
 		i++;
 	}
-	print_one(list, i, toggle);
+	sort_recursive(list, i, toggle);
 	free(list);
 }
 
@@ -284,11 +278,9 @@ int		parse_single(char *flag, char *search)
 		}
 	}
 	toggle = ft_memalloc(sizeof(t_flags));
-	// printf("flag %s, search %s", flag, search);
 	flag[0] == '-' && flag[1] == 'r' ? toggle->r = 1 : 0;
 	flag[0] == '-' && flag[1] == 'a' ? toggle->a = 1 : 0;
 	ls_single(search, toggle);
-	// ls(str);
 }
 
 void	parse_multi(char*flag, char *searc)
