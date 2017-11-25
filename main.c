@@ -309,24 +309,26 @@ int		parse_multi(int ac, char **av)
 		av[i][0] == '-' && av[i][1] == 'a' ? toggle->a = 1 : 0;
 		if (av[i][0] != '-')
 		{
-			if (*search != NULL)
-				*search++;
 			// *search = ft_memalloc(sizeof(av[i]) - sizeof(char*));
-			*search = av[i];
+			search[exist] = av[i];
 			exist++;
 		}
 		i++;
 	}
 	if (exist == 0)
 	{
-		*search = ".";
+		search[exist] = ".";
 		exist++;
 	}
-	i = 0;
-	while (i < exist)
+	i = exist - 1;
+	while (i >= 0)
 	{
+		if (exist > 1) // temporary, doesn't work properly with file and dir
+			printf("%s:\n", search[i]);
 		ls_single(search[i], toggle);
-		i++;
+		i--;
+		if (i >= 0) // temp for new line
+			write(1, "\n", 1);
 	}
 	free(search);
 	free(toggle);
