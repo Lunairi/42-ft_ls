@@ -53,7 +53,7 @@ int	check_upper(const char *s1, const char *s2)
 	while ((ft_tolower(*s1) == ft_tolower(*s2))
 			&& (*s1 != '\0') && (*s2 != '\0'))
 	{
-		ft_printf("%c %c \n", *s1, *s2);
+		printf("%c %c \n", *s1, *s2);
 		if (ft_isupper(*s1))
 			return (1);
 		else
@@ -163,9 +163,9 @@ void	print_list(char **list, int size, t_flags *toggle)
 	while (i < size)
 	{
 		if (list[i][0] != '.' && toggle->a == 0) // will not print hidden files
-			ft_printf("%s\n", list[i]);
+			printf("%s\n", list[i]);
 		if (toggle->a == 1) // will print hidden files
-			ft_printf("%s\n", list[i]);
+			printf("%s\n", list[i]);
 		if (toggle->r == 1)
 			i--;
 		else
@@ -214,7 +214,7 @@ int		item_amount(char *str)
 	if (dir == NULL)
 	{
 		// need to discern between dir and file for display or error, will do later
-		ft_printf("ft_ls: cannot access '%s': No such file or directory\n", str);
+		printf("ft_ls: cannot access '%s': No such file or directory\n", str);
 		return (0);
 	}
 	while ((d = readdir(dir)))
@@ -256,8 +256,8 @@ int		parse_single(char *flag, char *search)
 	{
 		if (flag[1] != 'r' && flag[1] != 'a' && flag[1] != '1')	
 		{
-			ft_printf("ls: invalid option -- '%c'\n", flag[1]);
-			ft_printf("Try 'ft_ls --help' for more information.\n");
+			printf("ls: invalid option -- '%c'\n", flag[1]);
+			printf("Try 'ft_ls --help' for more information.\n");
 			return (0);
 		}
 	}
@@ -271,16 +271,16 @@ int		parse_single(char *flag, char *search)
 
 void	help_ls()
 {
-	ft_printf("Usage: ft_ls [OPTION]... [FILE]...\n");
-	ft_printf("List information about the FILEs (the current directory by default).\n");
-	ft_printf("Mandatory arguments to long options are mandatory for short options too.\n");
-  	ft_printf("-a, --all                  do not ignore entries starting with .\n");
-	ft_printf("-l                         use a long listing format\n");
-	ft_printf("-r, --reverse              reverse order while sorting\n");
-	ft_printf("-R, --recursive            list subdirectories recursively\n");
-	ft_printf("-t                         sort by modification time, newest first\n");
-	ft_printf("-1                         list one file per line\n");
-	ft_printf("--help                     display this help and exit\n");
+	printf("Usage: ft_ls [OPTION]... [FILE]...\n");
+	printf("List information about the FILEs (the current directory by default).\n");
+	printf("Mandatory arguments to long options are mandatory for short options too.\n");
+  	printf("-a, --all                  do not ignore entries starting with .\n");
+	printf("-l                         use a long listing format\n");
+	printf("-r, --reverse              reverse order while sorting\n");
+	printf("-R, --recursive            list subdirectories recursively\n");
+	printf("-t                         sort by modification time, newest first\n");
+	printf("-1                         list one file per line\n");
+	printf("--help                     display this help and exit\n");
 }
 
 int		parse_multi(int ac, char **av)
@@ -292,7 +292,7 @@ int		parse_multi(int ac, char **av)
 
 	search = (char**)ft_memalloc(sizeof(char*) * (ac - 1));
 	toggle = ft_memalloc(sizeof(t_flags));
-	// ft_printf("%p toggle | %p search\n", toggle, search);
+	// printf("%p toggle | %p search\n", toggle, search);
 	i = 1;
 	exist = 0;
 	while (av[i])
@@ -301,8 +301,8 @@ int		parse_multi(int ac, char **av)
 		{
 			if (av[i][1] != 'r' && av[i][1] != 'a' && av[i][1] != '1')	
 			{
-				ft_printf("ls: invalid option -- '%c'\n", av[i][1]);
-				ft_printf("Try 'ft_ls --help' for more information.\n");
+				printf("ls: invalid option -- '%c'\n", av[i][1]);
+				printf("Try 'ft_ls --help' for more information.\n");
 				return (0);
 			}
 		}
@@ -325,7 +325,7 @@ int		parse_multi(int ac, char **av)
 	while (i >= 0)
 	{
 		if (exist > 1) // temporary, doesn't work properly with file and dir
-			ft_printf("%s:\n", search[i]);
+			printf("%s:\n", search[i]);
 		ls_single(search[i], toggle);
 		i--;
 		if (i >= 0) // temp for new line
