@@ -14,11 +14,10 @@
 
 NAME	= ft_ls
 
-SRC		= main.c
+SRC		= main.c multi.c single.c printsort.c utility.c
 
 OBJ 	= $(addprefix ./objects/, $(SRC:.c=.o))
 CFLAG	= -Wall -Wextra -Werror
-LFLAG	= -L ./libft/libft.a
 IFLAG	= -I libft -I includes
 
 .SILENT:
@@ -27,7 +26,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	make -C libft/
-	gcc $(CFLAG) $(FFLAG) -I libft -I includes $^ -o $(NAME)
+	gcc $(CFLAG) -L libft -lft -I libft -I includes $^ -o $(NAME)
 	printf '\033[32m[ ✔ ] %s\n\033[0m' "Created ft_ls"
 
 ./objects/%.o: ./sources/%.c
@@ -48,7 +47,6 @@ test:
 	make fclean
 	make
 	printf '\033[32m[ ✔ ] %s\n\033[0m' "Testing ft_ls"
-	./rtv1
 
 re: fclean all
 

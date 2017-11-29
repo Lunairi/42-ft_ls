@@ -129,6 +129,11 @@ void				ft_putwstrf(wchar_t *s, int *p);
 */
 
 /*
+** ft_printf.c
+*/
+int					ft_printf(const char *str, ...);
+
+/*
 ** parse_flags.c
 */
 void				parse_flags(int *i, const char *str, va_list args, int *p);

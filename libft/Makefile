@@ -22,20 +22,17 @@ SRC = ft_atoi.c ft_bzero.c ft_find_next_prime.c ft_is_prime.c \
 	ft_putnbr_fd.c ft_putnbr.c ft_putstr_fd.c ft_putstr.c \
 	ft_sqrt.c ft_strcat.c ft_strchr.c ft_strclr.c ft_strcmp.c \
 	ft_strcpy.c ft_strdel.c ft_strdup.c ft_strequ.c ft_putld.c \
-	ft_striter.c ft_striteri.c ft_strjoin.c ft_strlcat.c \
+	ft_striter.c ft_striteri.c ft_strjoin.c ft_strlcat.c ft_printf.c \
 	ft_strlen.c ft_strmap.c ft_strmapi.c ft_strncat.c ft_strncmp.c \
 	ft_strncpy.c ft_strnequ.c ft_strnew.c ft_strnstr.c ft_strrchr.c \
 	ft_strrev.c ft_strsplit.c ft_strstr.c ft_strsub.c ft_strtrim.c \
 	ft_swap.c ft_tolower.c ft_toupper.c ft_strmcat.c ft_fdtostr.c \
 	ft_strndup.c ft_strucmp.c ft_strnull.c ft_strerr.c ft_strput.c \
-	ft_putoct.c ft_putunbr.c ft_puthex.c ft_putuhex.c \
+	ft_putoct.c ft_putunbr.c ft_puthex.c ft_putuhex.c flags_intj.c \
 	ft_putstrf.c ft_putnbrf.c ft_numulen.c ft_putadr.c ft_putull.c \
-	flags_adr.c flags_align.c flags_int.c \
-	flags_inth.c flags_zero.c ft_printf.c \
-	parse_flags.c parse_moreflags.c flags_palign.c \
-	flags_spc.c flags_str.c flags_intl.c \
-	flags_intll.c flags_intz.c flags_inthh.c \
-	flags_intj.c
+	flags_adr.c flags_align.c flags_int.c flags_inth.c flags_zero.c \
+	flags_inthh.c parse_flags.c parse_moreflags.c flags_palign.c \
+	flags_spc.c flags_str.c flags_intl.c flags_intll.c flags_intz.c
 
 OBJ = $(SRC:.c=.o)
 HEADER = includes/
