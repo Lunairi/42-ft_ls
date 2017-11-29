@@ -29,6 +29,11 @@ $(NAME): $(OBJ)
 	gcc $(CFLAG) -L libft -lft -I libft -I includes $^ -o $(NAME)
 	printf '\033[32m[ ✔ ] %s\n\033[0m' "Created ft_ls"
 
+sanitize: $(OBJ)
+	make -C libft/
+	gcc -fsanitize=address $(CFLAG) -L libft -lft -I libft -I includes $^ -o $(NAME)
+	printf '\033[32m[ ✔ ] %s\n\033[0m' "Fsanitize ft_ls"
+
 ./objects/%.o: ./sources/%.c
 	gcc $(IFLAG) -c $< -o $@
 
@@ -43,11 +48,8 @@ fclean: clean
 	/bin/rm -f $(NAME)
 	printf '\033[31m[ ✔ ] %s\n\033[0m' "Fcleaned ft_ls"
 
-test:
-	make fclean
-	make
-	printf '\033[32m[ ✔ ] %s\n\033[0m' "Testing ft_ls"
-
 re: fclean all
+
+test: fclean sanitize
 
 .PHONY: clean fclean re all test
