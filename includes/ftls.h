@@ -54,12 +54,14 @@ int				parse_single(char *flag, char *search);
 */
 void			print_list(char **list, int size, t_flags *toggle);
 void			sort_recursive(char **list, int size, t_flags *toggle);
+void			time_sort_recursive(char **list, int size, t_flags *toggle);
 
 /*
 ** utility.c
 */
 int				item_amount(char *str);
 void			swap_item(char **one, char **two);
+int				check_flags(char *str, t_flags *toggle);
 
 /*
 ** printlong.c

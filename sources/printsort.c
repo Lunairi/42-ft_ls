@@ -58,6 +58,55 @@ void	print_list(char **list, int size, t_flags *toggle)
 	}
 }
 
+int		time_compare(char *one, char *two)
+{
+	struct stat		mtime1;
+	struct stat		mtime2;
+	time_t			time1;
+	time_t			time2;
+
+	if (stat(one, &mtime1) == 0)
+		time1 = mtime1.st_mtime;
+	if (stat(two, &mtime2) == 0)
+		time2 = mtime2.st_mtime;
+	if (time1 > time2)
+		return (-1);
+	if (time1 == time2)
+		return (ft_strcmp(one, two));
+	return (0);
+
+}
+
+void	time_sort_recursive(char **list, int size, t_flags *toggle)
+{
+	int 	i;
+	int		count;
+
+	i = 0;
+	count = 0;
+	while (i < size)
+	{
+		if ((list[i + 1] != NULL))
+		{
+			if (time_compare(list[i + 1], list[i]) < 0)
+			{
+				swap_item(&list[i], &list[i + 1]);
+				count = 1;
+			}
+			else
+				i++;
+		}
+		else
+			i++;
+	}
+	if (count == 0 && toggle->l == 1)
+		print_long(list, size, toggle);
+	else if (count == 0)
+		print_list(list, size, toggle);
+	else
+		time_sort_recursive(list, size, toggle);
+}
+
 void	sort_recursive(char **list, int size, t_flags *toggle)
 {
 	int 	i;
@@ -69,7 +118,7 @@ void	sort_recursive(char **list, int size, t_flags *toggle)
 	{
 		if ((list[i + 1] != NULL))
 		{
-			if(ft_strcmp(list[i + 1], list[i]) < 0)
+			if (ft_strcmp(list[i + 1], list[i]) < 0)
 			{
 				swap_item(&list[i], &list[i + 1]);
 				count = 1;
