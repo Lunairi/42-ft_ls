@@ -14,15 +14,18 @@
 # define FTLS_H
 
 # include <stdlib.h>
-# include <sys/types.h>
-# include <sys/uio.h>
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdio.h>
-# include <sys/stat.h>
 # include <math.h>
 # include <sys/ioctl.h>
+# include <sys/types.h>
+# include <sys/uio.h>
+# include <sys/stat.h>
 # include <dirent.h>
+# include <pwd.h>
+# include <grp.h>
+# include <time.h>
 
 # include "libft.h"
 
@@ -32,6 +35,7 @@ typedef struct	s_flags
 	int			a;
 	int			l;
 	int			t;
+	int			R;
 }				t_flags;
 
 /*
@@ -56,5 +60,10 @@ void			sort_recursive(char **list, int size, t_flags *toggle);
 */
 int				item_amount(char *str);
 void			swap_item(char **one, char **two);
+
+/*
+** printlong.c
+*/
+void	print_l(char *str);
 
 #endif

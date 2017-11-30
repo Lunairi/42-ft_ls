@@ -17,13 +17,20 @@ int		item_amount(char *str)
 	struct dirent	*d;
 	DIR				*dir;
 	int				i;
+	struct stat		items;
 
 	i = 0;
 	dir = opendir(str);
+	stat(str, &items);
+	if (S_ISREG(items.st_mode))
+	{
+		ft_printf("%s\n", str);
+		return (0);
+	}
 	if (dir == NULL)
 	{
 		// need to discern between dir and file for display or error, will do later
-		ft_printf("ft_ls: cannot access '%s': No such file or directory\n", str);
+		ft_printf("ft_ls: %s: No such file or directory\n", str);
 		return (0);
 	}
 	while ((d = readdir(dir)))

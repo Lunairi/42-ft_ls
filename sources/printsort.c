@@ -12,6 +12,29 @@
 
 #include "ftls.h"
 
+void	print_long(char **list, int size, t_flags *toggle)
+{
+	int i;
+
+	if (toggle->r == 1)
+		i = size - 1;
+	else
+		i = 0;
+	while (i < size)
+	{
+		if (list[i][0] != '.' && toggle->a == 0) // will not print hidden files
+			print_l(list[i]);
+		if (toggle->a == 1) // will print hidden files
+			print_l(list[i]);
+		if (toggle->r == 1)
+			i--;
+		else
+			i++;
+		if (i == -1) // really not needed but lazy way of handling r reverse counting down without two print function
+			i = size;
+	}
+}
+
 void	print_list(char **list, int size, t_flags *toggle)
 {
 	int i;
@@ -57,7 +80,9 @@ void	sort_recursive(char **list, int size, t_flags *toggle)
 		else
 			i++;
 	}
-	if (count == 0)
+	if (count == 0 && toggle->l == 1)
+		print_long(list, size, toggle);
+	else if (count == 0)
 		print_list(list, size, toggle);
 	else
 		sort_recursive(list, size, toggle);

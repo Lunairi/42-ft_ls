@@ -14,7 +14,7 @@
 
 NAME	= ft_ls
 
-SRC		= main.c multi.c single.c printsort.c utility.c
+SRC		= main.c multi.c single.c printsort.c utility.c printlong.c
 
 OBJ 	= $(addprefix ./objects/, $(SRC:.c=.o))
 CFLAG	= -Wall -Wextra -Werror

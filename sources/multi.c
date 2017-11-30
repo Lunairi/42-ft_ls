@@ -28,7 +28,7 @@ int		parse_multi(int ac, char **av)
 	{
 		if(av[i][0] == '-')
 		{
-			if (av[i][1] != 'r' && av[i][1] != 'a' && av[i][1] != '1')	
+			if (av[i][1] != 'r' && av[i][1] != 'a' && av[i][1] != '1' && av[i][1] != 'l')	
 			{
 				ft_printf("ls: invalid option -- '%c'\n", av[i][1]);
 				ft_printf("Try 'ft_ls --help' for more information.\n");
@@ -37,9 +37,12 @@ int		parse_multi(int ac, char **av)
 		}
 		av[i][0] == '-' && av[i][1] == 'r' ? toggle->r = 1 : 0;
 		av[i][0] == '-' && av[i][1] == 'a' ? toggle->a = 1 : 0;
+		av[i][0] == '-' && av[i][1] == 'l' ? toggle->l = 1 : 0;
 		if (av[i][0] != '-')
 		{
 			search[exist] = av[i];
+			// printf("Item: %s\n", search[exist]); // remove later, used to test -l
+			// print_l(search[exist]); // remove later, used to test -l
 			exist++;
 		}
 		i++;
@@ -54,7 +57,7 @@ int		parse_multi(int ac, char **av)
 	{
 		if (exist > 1) // temporary, doesn't work properly with file and dir
 			ft_printf("%s:\n", search[i]);
-		ls_single(search[i], toggle);
+		ls_single(search[i], toggle); // uncomment later after testing -l
 		i--;
 		if (i >= 0) // temp for new line
 			write(1, "\n", 1);
