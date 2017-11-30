@@ -12,7 +12,7 @@
 
 #include "ftls.h"
 
-static int filetypeletter(int mode)
+static int file_type(int mode)
 {
     char    c;
 
@@ -24,39 +24,24 @@ static int filetypeletter(int mode)
         c = 'b';
     else if (S_ISCHR(mode))
         c = 'c';
-#ifdef S_ISFIFO
     else if (S_ISFIFO(mode))
         c = 'p';
-#endif  /* S_ISFIFO */
-#ifdef S_ISLNK
     else if (S_ISLNK(mode))
         c = 'l';
-#endif  /* S_ISLNK */
-#ifdef S_ISSOCK
     else if (S_ISSOCK(mode))
         c = 's';
-#endif  /* S_ISSOCK */
-#ifdef S_ISDOOR
-    /* Solaris 2.6, etc. */
-    else if (S_ISDOOR(mode))
-        c = 'D';
-#endif  /* S_ISDOOR */
     else
-    {
-        /* Unknown type -- possibly a regular file? */
         c = '?';
-    }
     return(c);
 }
 
-/* Convert a mode field into "ls -l" type perms field. */
-static char *lsperms(int mode)
+char *perms(int mode)
 {
     static const char *rwx[] = {"---", "--x", "-w-", "-wx",
     "r--", "r-x", "rw-", "rwx"};
     static char bits[11];
 
-    bits[0] = filetypeletter(mode);
+    bits[0] = file_type(mode);
     ft_strcpy(&bits[1], rwx[(mode >> 6)& 7]);
     ft_strcpy(&bits[4], rwx[(mode >> 3)& 7]);
     ft_strcpy(&bits[7], rwx[(mode & 7)]);
@@ -82,10 +67,10 @@ void	print_l(char *str)
 
 	i = -1;
 	stat(str, &items);
-	bits = lsperms(items.st_mode);
+	bits = perms(items.st_mode);
 	user = *getpwuid(items.st_uid);
 	group = *getgrgid(items.st_gid);
-	ft_printf("BLOCKS: %lli\n", items.st_blocks);
+	// ft_printf("BLOCKS: %lli\n", items.st_blocks);
 	ft_printf("%s  %i %s  %s %llu ", bits, items.st_nlink, user.pw_name, group.gr_name, items.st_size);
 	mtime = ctime(&items.st_mtime);
 	while (++i < 16)

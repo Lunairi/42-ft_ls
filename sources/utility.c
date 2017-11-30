@@ -27,7 +27,7 @@ int		item_amount(char *str)
 		ft_printf("%s\n", str);
 		return (0);
 	}
-	if (dir == NULL)
+	else if (dir == NULL)
 	{
 		// need to discern between dir and file for display or error, will do later
 		ft_printf("ft_ls: %s: No such file or directory\n", str);
