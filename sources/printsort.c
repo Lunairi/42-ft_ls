@@ -62,17 +62,18 @@ int		time_compare(char *one, char *two)
 {
 	struct stat		mtime1;
 	struct stat		mtime2;
-	time_t			time1;
-	time_t			time2;
 
-	if (stat(one, &mtime1) == 0)
-		time1 = mtime1.st_mtime;
-	if (stat(two, &mtime2) == 0)
-		time2 = mtime2.st_mtime;
-	if (time1 > time2)
+	stat(one, &mtime1);
+	stat(two, &mtime2);
+	if (mtime1.st_mtime > mtime2.st_mtime)
 		return (-1);
-	if (time1 == time2)
-		return (ft_strcmp(one, two));
+	if (mtime1.st_mtime == mtime2.st_mtime)
+	{
+		if (mtime1.st_mtimespec.tv_nsec > mtime2.st_mtimespec.tv_nsec)
+			return (-1);
+		else if (mtime1.st_mtimespec.tv_nsec == mtime2.st_mtimespec.tv_nsec)
+			return (ft_strcmp(two, one));
+	}
 	return (0);
 
 }
