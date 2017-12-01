@@ -29,7 +29,7 @@
 
 # include "libft.h"
 
-typedef struct	s_flags
+typedef struct			s_flags
 {
 	int 				r;
 	int					a;
@@ -42,37 +42,37 @@ typedef struct	s_flags
 	int					gid;
 	unsigned long long	size;
 	unsigned long long	i;
-}				t_flags;
+}						t_flags;
 
 /*
 ** multi.c
 */
-int				parse_multi(int ac, char **av);
+int						parse_multi(int ac, char **av);
 
 /*
 ** single.c
 */
-int				ls_single(char *str, t_flags *toggle);
-int				parse_single(char *flag, char *search);
+int						ls_single(char *str, t_flags *toggle);
+int						parse_single(char *flag, char *search);
 
 /*
 ** printsort.c
 */
-void			print_list(char **list, int size, t_flags *toggle);
-void			sort_recursive(char **list, int size, t_flags *toggle, char *dir);
-void			time_sort_recursive(char **list, int size, t_flags *toggle, char *dir);
-void			long_data(char *str, char *dir, char *file, t_flags *toggle);
+void					print_list(char **list, int size, t_flags *toggle);
+void					sort_recursive(char **list, int size, t_flags *toggle, char *dir);
+void					time_sort_recursive(char **list, int size, t_flags *toggle, char *dir);
 
 /*
 ** utility.c
 */
-int				item_amount(char *str);
-void			swap_item(char **one, char **two);
-int				check_flags(char *str, t_flags *toggle);
+int						item_amount(char *str);
+void					swap_item(char **one, char **two);
+int						check_flags(char *str, t_flags *toggle);
+void					long_data(char *str, char *dir, char *file, t_flags *toggle);
 
 /*
 ** printlong.c
 */
-void			print_l(char *str, char *dir, char *file, t_flags *toggle);
+void					print_l(char *str, char *dir, char *file, t_flags *toggle);
 
 #endif

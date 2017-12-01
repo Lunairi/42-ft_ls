@@ -12,28 +12,6 @@
 
 #include "ftls.h"
 
-void	long_data(char *str, char *dir, char *file, t_flags *toggle)
-{
-	struct stat		items;
-	struct passwd	user;
-	struct group	group;
-
-    file = ft_strjoin(dir, "/");
-    file = ft_strjoin(file, str);
-	stat(file, &items);
-	toggle->blocks = toggle->blocks + items.st_blocks;
-	user = *getpwuid(items.st_uid);
-	if (ft_strlen(user.pw_name) > toggle->uid)
-		toggle->uid = ft_strlen(user.pw_name);
-	group = *getgrgid(items.st_gid);
-	if (ft_strlen(group.gr_name) > toggle->gid)
-		toggle->gid = ft_strlen(group.gr_name);
-	if (ft_numullen(items.st_size) > toggle->size)
-		toggle->size = ft_numullen(items.st_size);
-	if (ft_numlen(items.st_nlink) > toggle->nlinks)
-		toggle->nlinks = ft_numlen(items.st_nlink);
-}
-
 void	print_long(char **list, int size, t_flags *toggle, char *dir)
 {
 	int i;
