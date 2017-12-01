@@ -12,6 +12,20 @@
 
 #include "ftls.h"
 
+// void	add_non_dir(char **list, int size, t_flags *toggle, char *dir)
+// {
+// 	int i;
+
+// 	i = 0;
+// 	while (list[i] != NULL)
+// 		i++;
+// 	list[i] = dir;
+// 	if (toggle->t == 1)
+// 		time_sort_recursive(list, i, toggle, dir);
+// 	else
+// 		sort_recursive(list, i, toggle, dir);
+// }
+
 int		ls_single(char *str, t_flags *toggle)
 {
 	struct dirent	*d;
@@ -21,7 +35,7 @@ int		ls_single(char *str, t_flags *toggle)
 	int				item;
 
 	i = 0;
-	if (!(item = item_amount(str))) // if return 0 it means directory couldn't open
+	if (!(item = item_amount(str, toggle))) // if return 0 it means directory couldn't open
 		return (0);
 	list = (char**)ft_memalloc(sizeof(char*) * item);
 	dir = opendir(str);
@@ -34,8 +48,8 @@ int		ls_single(char *str, t_flags *toggle)
 		time_sort_recursive(list, i, toggle, str);
 	else
 		sort_recursive(list, i, toggle, str);
-	free(list);
 	closedir(dir);
+	free(list);
 	return (0);
 }
 

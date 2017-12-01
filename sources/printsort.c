@@ -17,12 +17,13 @@ void	print_long(char **list, int size, t_flags *toggle, char *dir)
 	int i;
 
 	i = -1;
+	reset_data(toggle);
 	while (++i < size)
 	{
 		if (list[i][0] != '.' && toggle->a == 0)
-			long_data(list[i], dir, 0, toggle);
+			grab_format_long(list[i], dir, 0, toggle);
 		if (toggle->a == 1)
-			long_data(list[i], dir, 0, toggle);
+			grab_format_long(list[i], dir, 0, toggle);
 	}
 	if (toggle->r == 1)
 		i = size - 1;

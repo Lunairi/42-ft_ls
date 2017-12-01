@@ -61,14 +61,16 @@ int						parse_single(char *flag, char *search);
 void					print_list(char **list, int size, t_flags *toggle);
 void					sort_recursive(char **list, int size, t_flags *toggle, char *dir);
 void					time_sort_recursive(char **list, int size, t_flags *toggle, char *dir);
+void					print_long(char **list, int size, t_flags *toggle, char *dir);
 
 /*
 ** utility.c
 */
-int						item_amount(char *str);
+int						item_amount(char *str, t_flags *toggle);
 void					swap_item(char **one, char **two);
 int						check_flags(char *str, t_flags *toggle);
-void					long_data(char *str, char *dir, char *file, t_flags *toggle);
+void					grab_format_long(char *str, char *dir, char *file, t_flags *toggle);
+void					reset_data(t_flags *toggle);
 
 /*
 ** printlong.c

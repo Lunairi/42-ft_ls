@@ -35,7 +35,7 @@ static int file_type(int mode)
 	return(c);
 }
 
-char *perms(int mode)
+char	*perms(int mode)
 {
 	static const char *rwx[] = {"---", "--x", "-w-", "-wx",
 		"r--", "r-x", "rw-", "rwx"};
@@ -55,6 +55,23 @@ char *perms(int mode)
 	return(bits);
 }
 
+void	print_spacing(t_flags *toggle, char *dir)
+{
+	if (dir != NULL)
+	{
+		while (toggle->i-- > 0)
+			ft_putstr(" ");
+	}
+}
+
+void	print_date_name(t_flags *toggle, char *str, char *mtime)
+{
+	toggle->i = 3;
+	while (++toggle->i < 16)
+		write(1, &mtime[toggle->i], 1);
+	ft_printf(" %s\n", str);
+}
+
 void	print_l(char *str, char *dir, char *file, t_flags *toggle)
 {
 	struct stat		items;
@@ -63,42 +80,29 @@ void	print_l(char *str, char *dir, char *file, t_flags *toggle)
 	char			*bits;
 	char			*mtime;
 
-    file = ft_strjoin(dir, "/");
-    file = ft_strjoin(file, str);
+	// if (dir != NULL)
+	// {
+		file = ft_strjoin(dir, "/");
+		file = ft_strjoin(file, str);
+	// }
+	// else
+	// 	file = str;
 	stat(file, &items);
 	bits = perms(items.st_mode);
 	user = *getpwuid(items.st_uid);
 	group = *getgrgid(items.st_gid);
-	// ft_printf("BLOCKS: %lli\n", items.st_blocks);
 	ft_printf("%s  ", bits);
 	if ((toggle->i = (toggle->nlinks - ft_numlen(items.st_nlink))) > 0)
-	{
-		while (toggle->i-- > 0)
-			ft_putstr(" ");
-	}
+		print_spacing(toggle, dir);
 	ft_printf("%i ", items.st_nlink);
 	if ((toggle->i = (toggle->uid - ft_strlen(user.pw_name))) > 0)
-	{
-		while (toggle->i-- > 0)
-			ft_putstr(" ");
-	}
+		print_spacing(toggle, dir);
 	ft_printf("%s  ", user.pw_name);
 	if ((toggle->i = (toggle->gid - ft_strlen(group.gr_name))) > 0)
-	{
-		while (toggle->i-- > 0)
-			ft_putstr(" ");
-	}
+		print_spacing(toggle, dir);
 	ft_printf("%s ", group.gr_name);
 	if ((toggle->i = (toggle->size - ft_numullen(items.st_size))) > 0)
-	{
-		while (toggle->i-- > 0)
-			ft_putstr(" ");
-	}
+		print_spacing(toggle, dir);
 	ft_printf("%llu ", items.st_size);
-	// ft_printf("%s  %i %s  %s %llu ", bits, items.st_nlink, user.pw_name, group.gr_name, items.st_size);
-	mtime = ctime(&items.st_mtime);
-	toggle->i = 3;
-	while (++toggle->i < 16)
-		write(1, &mtime[toggle->i], 1);
-	ft_printf(" %s\n", str);
+	print_date_name(toggle, str, ctime(&items.st_mtime));
 }

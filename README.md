@@ -25,6 +25,12 @@ Day 4 (About 3 hours)
 - In Progress: -l, -t, -R
 - Note: -l function is working but not properly formatted, turns out sort upper/lower was only a linux thing so no longer needs to be completed. -t can easily be done, and setting up the print so that -R can be completed easily. Overall good progress, also started to work on Joe Krause https://github.com/SuperSpyTX who started ls.
 
+Day 5 (About 4 hours)
+- Completed: Basic output, basic sorting algorithm, sort hidden items, --help, customized flag system, -1, -a, -r, handle multiple argv, error handling for multi files/dir, -t
+- Incomplete: N/A
+- In Progress: -l, -R
+- Note: -l function has some specific format differences for when you do a regular item versus directory and how it's formatted. -R will be finalized at the end, trying to make -l as close to the same format as -l. -t was relatively quick, had to use timespec to get nanosecond for the most accurate copy, thanks to Stephen Gardner https://github.com/stephen-gardner for some tips and the right direction for some wonky behavior I was having with -t prior to using timespec.
+
 New Functions Learning List:
 - ~opendir (studied and used)~
 - ~readdir (studied and used)~

@@ -12,14 +12,29 @@
 
 #include "ftls.h"
 
-void	long_data(char *str, char *dir, char *file, t_flags *toggle)
+void	reset_data(t_flags *toggle)
+{
+	toggle->blocks = 0;
+	toggle->nlinks = 0;
+	toggle->uid = 0;
+	toggle->gid = 0;
+	toggle->size = 0;
+	toggle->i = -1;
+}
+
+void	grab_format_long(char *str, char *dir, char *file, t_flags *toggle)
 {
 	struct stat		items;
 	struct passwd	user;
 	struct group	group;
 
-    file = ft_strjoin(dir, "/");
-    file = ft_strjoin(file, str);
+	if (dir != NULL)
+	{
+		file = ft_strjoin(dir, "/");
+		file = ft_strjoin(file, str);
+	}
+	else
+		file = str;
 	stat(file, &items);
 	toggle->blocks = toggle->blocks + items.st_blocks;
 	user = *getpwuid(items.st_uid);
@@ -57,7 +72,8 @@ int		check_flags(char *str, t_flags *toggle)
 	return (0);
 }
 
-int		item_amount(char *str)
+
+int		item_amount(char *str, t_flags *toggle)
 {
 	struct dirent	*d;
 	DIR				*dir;
@@ -69,6 +85,9 @@ int		item_amount(char *str)
 	stat(str, &items);
 	if (S_ISREG(items.st_mode))
 	{
+		// if (toggle->l == 1)
+		// 	print_long(&str, 1, toggle, NULL);
+		// else
 		ft_printf("%s\n", str);
 		return (0);
 	}
