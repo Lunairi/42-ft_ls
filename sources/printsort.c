@@ -12,20 +12,51 @@
 
 #include "ftls.h"
 
-void	print_long(char **list, int size, t_flags *toggle)
+void	long_data(char *str, char *dir, char *file, t_flags *toggle)
+{
+	struct stat		items;
+	struct passwd	user;
+	struct group	group;
+
+    file = ft_strjoin(dir, "/");
+    file = ft_strjoin(file, str);
+	stat(file, &items);
+	toggle->blocks = toggle->blocks + items.st_blocks;
+	user = *getpwuid(items.st_uid);
+	if (ft_strlen(user.pw_name) > toggle->uid)
+		toggle->uid = ft_strlen(user.pw_name);
+	group = *getgrgid(items.st_gid);
+	if (ft_strlen(group.gr_name) > toggle->gid)
+		toggle->gid = ft_strlen(group.gr_name);
+	if (ft_numullen(items.st_size) > toggle->size)
+		toggle->size = ft_numullen(items.st_size);
+	if (ft_numlen(items.st_nlink) > toggle->nlinks)
+		toggle->nlinks = ft_numlen(items.st_nlink);
+}
+
+void	print_long(char **list, int size, t_flags *toggle, char *dir)
 {
 	int i;
 
+	i = -1;
+	while (++i < size)
+	{
+		if (list[i][0] != '.' && toggle->a == 0)
+			long_data(list[i], dir, 0, toggle);
+		if (toggle->a == 1)
+			long_data(list[i], dir, 0, toggle);
+	}
 	if (toggle->r == 1)
 		i = size - 1;
 	else
 		i = 0;
+	ft_printf("total %lli\n", toggle->blocks);
 	while (i < size)
 	{
 		if (list[i][0] != '.' && toggle->a == 0) // will not print hidden files
-			print_l(list[i]);
+			print_l(list[i], dir, 0, toggle);
 		if (toggle->a == 1) // will print hidden files
-			print_l(list[i]);
+			print_l(list[i], dir, 0, toggle);
 		if (toggle->r == 1)
 			i--;
 		else
@@ -78,7 +109,7 @@ int		time_compare(char *one, char *two)
 
 }
 
-void	time_sort_recursive(char **list, int size, t_flags *toggle)
+void	time_sort_recursive(char **list, int size, t_flags *toggle, char *dir)
 {
 	int 	i;
 	int		count;
@@ -101,14 +132,14 @@ void	time_sort_recursive(char **list, int size, t_flags *toggle)
 			i++;
 	}
 	if (count == 0 && toggle->l == 1)
-		print_long(list, size, toggle);
+		print_long(list, size, toggle, dir);
 	else if (count == 0)
 		print_list(list, size, toggle);
 	else
-		time_sort_recursive(list, size, toggle);
+		time_sort_recursive(list, size, toggle, dir);
 }
 
-void	sort_recursive(char **list, int size, t_flags *toggle)
+void	sort_recursive(char **list, int size, t_flags *toggle, char *dir)
 {
 	int 	i;
 	int		count;
@@ -131,9 +162,9 @@ void	sort_recursive(char **list, int size, t_flags *toggle)
 			i++;
 	}
 	if (count == 0 && toggle->l == 1)
-		print_long(list, size, toggle);
+		print_long(list, size, toggle, dir);
 	else if (count == 0)
 		print_list(list, size, toggle);
 	else
-		sort_recursive(list, size, toggle);
+		sort_recursive(list, size, toggle, dir);
 }

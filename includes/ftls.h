@@ -31,11 +31,17 @@
 
 typedef struct	s_flags
 {
-	int 		r;
-	int			a;
-	int			l;
-	int			t;
-	int			R;
+	int 				r;
+	int					a;
+	int					l;
+	int					t;
+	int					R;
+	long long			blocks;
+	int					nlinks;
+	int					uid;
+	int					gid;
+	unsigned long long	size;
+	unsigned long long	i;
 }				t_flags;
 
 /*
@@ -53,8 +59,9 @@ int				parse_single(char *flag, char *search);
 ** printsort.c
 */
 void			print_list(char **list, int size, t_flags *toggle);
-void			sort_recursive(char **list, int size, t_flags *toggle);
-void			time_sort_recursive(char **list, int size, t_flags *toggle);
+void			sort_recursive(char **list, int size, t_flags *toggle, char *dir);
+void			time_sort_recursive(char **list, int size, t_flags *toggle, char *dir);
+void			long_data(char *str, char *dir, char *file, t_flags *toggle);
 
 /*
 ** utility.c
@@ -66,6 +73,6 @@ int				check_flags(char *str, t_flags *toggle);
 /*
 ** printlong.c
 */
-void	print_l(char *str);
+void			print_l(char *str, char *dir, char *file, t_flags *toggle);
 
 #endif

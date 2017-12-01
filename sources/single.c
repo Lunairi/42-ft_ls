@@ -31,9 +31,9 @@ int		ls_single(char *str, t_flags *toggle)
 		i++;
 	}
 	if (toggle->t == 1)
-		time_sort_recursive(list, i, toggle);
+		time_sort_recursive(list, i, toggle, str);
 	else
-		sort_recursive(list, i, toggle);
+		sort_recursive(list, i, toggle, str);
 	free(list);
 	closedir(dir);
 	return (0);

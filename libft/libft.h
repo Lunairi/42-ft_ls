@@ -123,6 +123,7 @@ void				ft_putadr(unsigned long n, int *p);
 void				ft_putull(unsigned long long n, int *p);
 void				ft_putld(long n, int *p);
 void				ft_putwstrf(wchar_t *s, int *p);
+unsigned long long	ft_numullen(unsigned long long n);
 
 /*
 ** printf functions in printf folder
