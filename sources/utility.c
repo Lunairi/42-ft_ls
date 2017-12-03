@@ -62,7 +62,7 @@ int		check_flags(char *str, t_flags *toggle)
 		str[i] == 't' ? toggle->t = 1 : 0;
 		str[i] == 'R' ? toggle->re = 1 : 0;
 		if (str[i] != 'r' && str[i] != 'a' && str[i] != '1'
-			&& str[i] != 'l' && str[i] != 't' && str[i] != 'R')	
+			&& str[i] != 'l' && str[i] != 't' && str[i] != 'R')
 		{
 			ft_printf("ft_ls: illegal option -- '%c'\n", str[i]);
 			ft_printf("Try 'ft_ls --help' for more information.\n");
@@ -71,7 +71,6 @@ int		check_flags(char *str, t_flags *toggle)
 	}
 	return (0);
 }
-
 
 int		item_amount(char *str, t_flags *toggle)
 {

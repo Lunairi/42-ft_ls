@@ -21,7 +21,7 @@ int		ls_single(char *str, t_flags *toggle)
 	int				item;
 
 	i = 0;
-	if (!(item = item_amount(str, toggle))) // if return 0 it means directory couldn't open
+	if (!(item = item_amount(str, toggle)))
 		return (0);
 	list = (char**)ft_memalloc(sizeof(char*) * item);
 	dir = opendir(str);
@@ -44,7 +44,7 @@ int		parse_single(char *flag, char *search)
 	t_flags *toggle;
 
 	toggle = ft_memalloc(sizeof(t_flags));
-	if(flag[0] == '-')
+	if (flag[0] == '-')
 		if (check_flags(flag, toggle))
 			return (0);
 	ls_single(search, toggle);

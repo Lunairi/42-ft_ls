@@ -16,7 +16,7 @@ NAME	= ft_ls
 
 SRC		= main.c multi.c single.c printsort.c utility.c printlong.c \
 			long_process.c fd_utility.c fd_sort.c print_process.c \
-			fd_sorting.c
+			fd_sorting.c permissions.c
 OBJ 	= $(addprefix ./objects/, $(SRC:.c=.o))
 CFLAG	= -Wall -Wextra -Werror
 IFLAG	= -I libft -I includes

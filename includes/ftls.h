@@ -51,6 +51,7 @@ typedef struct			s_flags
 	int					fgid;
 	unsigned long long	fsize;
 	unsigned long long	total;
+	unsigned long long	count;
 }						t_flags;
 
 /*
@@ -135,5 +136,10 @@ void					file_dir_reverse_sort(char **search, int exist,
 							t_flags *toggle, int i);
 int						alpha_sort_fd(char **search, int i, t_flags *toggle);
 int						time_sort_fd(char **search, int i, t_flags *toggle);
+
+/*
+** permissions.c
+*/
+char					*perms(int mode);
 
 #endif

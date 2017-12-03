@@ -12,12 +12,14 @@
 
 #include "ftls.h"
 
-void	help_ls()
+void	help_ls(void)
 {
 	ft_printf("Usage: ft_ls [OPTION]... [FILE]...\n");
-	ft_printf("List information about the FILEs (the current directory by default).\n");
-	ft_printf("Mandatory arguments to long options are mandatory for short options too.\n");
-  	ft_printf("-a,             do not ignore entries starting with .\n");
+	ft_printf("List information about the FILES \
+(the current directory by default).\n");
+	ft_printf("Mandatory arguments to long options are \
+mandatory for short options too.\n");
+	ft_printf("-a,             do not ignore entries starting with .\n");
 	ft_printf("-l              use a long listing format\n");
 	ft_printf("-r,             reverse order while sorting\n");
 	ft_printf("-R,             list subdirectories recursively\n");

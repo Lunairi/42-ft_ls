@@ -12,82 +12,44 @@
 
 #include "ftls.h"
 
-static int file_type(int mode)
+void		print_xattr(t_flags *toggle, struct stat timer, char *mtime)
 {
-	char	c;
-
-	if (S_ISREG(mode))
-		c = '-';
-	else if (S_ISDIR(mode))
-		c = 'd';
-	else if (S_ISBLK(mode))
-		c = 'b';
-	else if (S_ISCHR(mode))
-		c = 'c';
-	else if (S_ISFIFO(mode))
-		c = 'p';
-	else if (S_ISLNK(mode))
-		c = 'l';
-	else if (S_ISSOCK(mode))
-		c = 's';
-	else
-		c = '?';
-	return(c);
+	toggle->i = 19;
+	write(1, " ", 1);
+	while (++toggle->i < 24)
+		write(1, &mtime[toggle->i], 1);
 }
 
-char	*perms(int mode)
-{
-	static const char *rwx[] = {"---", "--x", "-w-", "-wx",
-		"r--", "r-x", "rw-", "rwx"};
-	static char bits[11];
-
-	bits[0] = file_type(mode);
-	ft_strcpy(&bits[1], rwx[(mode >> 6)& 7]);
-	ft_strcpy(&bits[4], rwx[(mode >> 3)& 7]);
-	ft_strcpy(&bits[7], rwx[(mode & 7)]);
-	if (mode & S_ISUID)
-		bits[3] = (mode & S_IXUSR) ? 's' : 'S';
-	if (mode & S_ISGID)
-		bits[6] = (mode & S_IXGRP) ? 's' : 'l';
-	if (mode & S_ISVTX)
-		bits[9] = (mode & S_IXOTH) ? 't' : 'T';
-	bits[10] = '\0';
-	return(bits);
-}
-
-void	print_date_name(t_flags *toggle, char *str, struct stat timer, char *file)
+void		print_date_name(t_flags *toggle, char *str,
+					struct stat timer, char *file)
 {
 	char			buf[1024];
 	ssize_t			len;
 	char			*mtime;
 
+	ft_printf("%llu ", timer.st_size);
 	mtime = ctime(&timer.st_mtime);
 	toggle->i = 3;
 	while (++toggle->i < 11)
 		write(1, &mtime[toggle->i], 1);
 	if (time(NULL) - timer.st_mtimespec.tv_sec >= 15724800)
-	{
-		toggle->i = 19;
-		write(1, " ", 1);
-		while(++toggle->i < 24)
-			write(1, &mtime[toggle->i], 1);
-	}
+		print_xattr(toggle, timer, mtime);
 	else
 	{
 		toggle->i = 10;
-		while(++toggle->i < 16)
+		while (++toggle->i < 16)
 			write(1, &mtime[toggle->i], 1);
 	}
-	if ((len = readlink(file, buf, sizeof(buf)-1)) != -1)
+	if ((len = readlink(file, buf, sizeof(buf) - 1)) != -1)
 	{
-    	buf[len] = '\0';
+		buf[len] = '\0';
 		str = ft_strjoin(str, " -> ");
 		str = ft_strjoin(str, buf);
 	}
 	ft_printf(" %s\n", str);
 }
 
-void	print_l_f(char *str, char *file, t_flags *toggle)
+void		print_l_f(char *str, char *file, t_flags *toggle)
 {
 	struct stat		items;
 	struct passwd	user;
@@ -116,7 +78,18 @@ void	print_l_f(char *str, char *file, t_flags *toggle)
 	print_date_name(toggle, str, items, file);
 }
 
-void	print_l(char *str, char *dir, char *file, t_flags *toggle)
+void		set_file(char *str, char *dir, char **file)
+{
+	if (dir != NULL)
+	{
+		*file = ft_strjoin(dir, "/");
+		*file = ft_strjoin(*file, str);
+	}
+	else
+		*file = str;
+}
+
+void		print_l(char *str, char *dir, char *file, t_flags *toggle)
 {
 	struct stat		items;
 	struct passwd	user;
@@ -124,13 +97,7 @@ void	print_l(char *str, char *dir, char *file, t_flags *toggle)
 	char			*bits;
 	char			*mtime;
 
-	if (dir != NULL)
-	{
-		file = ft_strjoin(dir, "/");
-		file = ft_strjoin(file, str);
-	}
-	else
-		file = str;
+	set_file(str, dir, &file);
 	lstat(file, &items);
 	bits = perms(items.st_mode);
 	user = *getpwuid(items.st_uid);
@@ -148,6 +115,5 @@ void	print_l(char *str, char *dir, char *file, t_flags *toggle)
 	ft_printf("%s ", group.gr_name);
 	if ((toggle->i = (toggle->size - ft_numullen(items.st_size))) > 0)
 		print_spacing(toggle, dir);
-	ft_printf("%llu ", items.st_size);
 	print_date_name(toggle, str, items, file);
 }

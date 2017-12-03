@@ -46,7 +46,7 @@ int		time_check(char *file1, char *file2, char *one, char *two)
 			return (ft_strcmp(two, one));
 	}
 	return (0);
-}	
+}
 
 int		time_compare(char *one, char *two, char *dir)
 {
@@ -69,17 +69,7 @@ int		time_compare(char *one, char *two, char *dir)
 	}
 	lstat(file1, &mtime1);
 	lstat(file2, &mtime2);
-	// return (time_check(file1, file2, one, two));
-	if (mtime1.st_mtime > mtime2.st_mtime)
-		return (-1);
-	if (mtime1.st_mtime == mtime2.st_mtime)
-	{
-		if (mtime1.st_mtimespec.tv_nsec > mtime2.st_mtimespec.tv_nsec)
-			return (-1);
-		else if (mtime1.st_mtimespec.tv_nsec == mtime2.st_mtimespec.tv_nsec)
-			return (ft_strcmp(two, one));
-	}
-	return (0);
+	return (time_check(file1, file2, one, two));
 }
 
 void	suffix(char *path)
@@ -100,7 +90,6 @@ void	suffix(char *path)
 	else
 		write(1, "   ", 3);
 }
-
 
 void	print_spacing(t_flags *toggle, char *dir)
 {
