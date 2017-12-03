@@ -60,7 +60,7 @@ int		check_flags(char *str, t_flags *toggle)
 		str[i] == 'a' ? toggle->a = 1 : 0;
 		str[i] == 'l' ? toggle->l = 1 : 0;
 		str[i] == 't' ? toggle->t = 1 : 0;
-		str[i] == 'R' ? toggle->R = 1 : 0;
+		str[i] == 'R' ? toggle->re = 1 : 0;
 		if (str[i] != 'r' && str[i] != 'a' && str[i] != '1'
 			&& str[i] != 'l' && str[i] != 't' && str[i] != 'R')	
 		{
@@ -85,9 +85,6 @@ int		item_amount(char *str, t_flags *toggle)
 	stat(str, &items);
 	if (S_ISREG(items.st_mode))
 	{
-		// if (toggle->l == 1)
-		// 	print_long(&str, 1, toggle, NULL);
-		// else
 		ft_printf("%s\n", str);
 		return (0);
 	}

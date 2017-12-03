@@ -40,7 +40,7 @@ HEADER = includes/
 all: $(NAME)
 
 $(NAME):
-	gcc -Wall -Wextra -Werror -c -I$(HEADER) $(SRC)
+	gcc -Wall -Wextra -Werror -c -I$(HEADER) $(SRC) -g
 	ar rc $(NAME) *.o
 	ranlib $(NAME)
 

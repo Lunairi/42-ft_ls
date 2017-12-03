@@ -31,18 +31,24 @@ Day 5 (About 4 hours)
 - In Progress: -l, -R
 - Note: -l function has some specific format differences for when you do a regular item versus directory and how it's formatted. -R will be finalized at the end, trying to make -l as close to the same format as -l. -t was relatively quick, had to use timespec to get nanosecond for the most accurate copy, thanks to Stephen Gardner https://github.com/stephen-gardner for some tips and the right direction for some wonky behavior I was having with -t prior to using timespec.
 
+Day 6 (About 3 hours)
+- Completed: Basic output, basic sorting algorithm, sort hidden items, --help, customized flag system, -1, -a, -r, handle multiple argv, error handling for multi files/dir, -t, symbolic link, xattr
+- Incomplete: N/A
+- In Progress: -l, -R
+- Note: Finalized symbolic link reading, need to fix -l formatting and work on -R. May also do @ with listxattr afterwards
+
 New Functions Learning List:
 - ~opendir (studied and used)~
 - ~readdir (studied and used)~
 - ~closedir (studied and used)~
 - ~stat (studied and used)~
-- lstat (studied, not yet used)
+- ~lstat (studied and used)~
 - ~getpwuid (studied and used)~
 - ~getgrgid (studied and used)~
-- listxattr (did not study yet)
-- getxattr (did not study yet)
-- time (studied, not yet used)
+- ~listxattr (studied and used)~
+- ~getxattr (studied and used)~
+- ~time (studied and used)~
 - ~ctime (studied and used)~
-- readlink (studied, not yet used)
+- ~readlink (studied and used)~
 - perror (studied, not yet used)
 - strerror (studied, not yet used)

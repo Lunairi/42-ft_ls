@@ -14,8 +14,9 @@
 
 NAME	= ft_ls
 
-SRC		= main.c multi.c single.c printsort.c utility.c printlong.c
-
+SRC		= main.c multi.c single.c printsort.c utility.c printlong.c \
+			long_process.c fd_utility.c fd_sort.c print_process.c \
+			fd_sorting.c
 OBJ 	= $(addprefix ./objects/, $(SRC:.c=.o))
 CFLAG	= -Wall -Wextra -Werror
 IFLAG	= -I libft -I includes
@@ -26,7 +27,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	make -C libft/
-	gcc $(CFLAG) -L libft -lft -I libft -I includes $^ -o $(NAME)
+	gcc $(CFLAG) -L libft -lft -I libft -I includes $^ -o $(NAME) -g
 	printf '\033[32m[ ✔ ] %s\n\033[0m' "Created ft_ls"
 
 sanitize: $(OBJ)
