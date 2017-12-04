@@ -42,11 +42,18 @@ int		ls_single(char *str, t_flags *toggle)
 int		parse_single(char *flag, char *search)
 {
 	t_flags *toggle;
+	char	**list;
 
 	toggle = ft_memalloc(sizeof(t_flags));
 	if (flag[0] == '-')
 		if (check_flags(flag, toggle))
 			return (0);
+	if (toggle->re == 1)
+	{
+		list = (char**)ft_memalloc(sizeof(char*) * 999999);
+		list[0] = search;
+		file_dir_recursion(list, toggle, -1, 1);
+	}
 	ls_single(search, toggle);
 	free(toggle);
 	return (0);

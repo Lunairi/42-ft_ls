@@ -38,7 +38,7 @@ int		parse_multi(int ac, char **av)
 	char	**search;
 	int		i;
 
-	search = (char**)ft_memalloc(sizeof(char*) * (ac - 1));
+	search = (char**)ft_memalloc(sizeof(char*) * 99999999);
 	toggle = ft_memalloc(sizeof(t_flags));
 	i = 1;
 	toggle->exist = 0;

@@ -103,21 +103,19 @@ void	sort_file_dir(char **search, int exist, t_flags *toggle)
 	int i;
 
 	i = -1;
-	while (++i < exist)
+	toggle->exist = exist;
+	if (toggle->re == 1)
+		file_dir_recursion(search, toggle, -1, exist);
+	while (++i < toggle->exist)
 	{
 		if (search[i][0] != '.' && toggle->a == 0)
 			grab_format_file(search[i], 0, toggle);
 		if (toggle->a == 1)
 			grab_format_file(search[i], 0, toggle);
 	}
-	file_dir_sort(search, exist, toggle, 0);
-	file_dir_alpha_sort(search, exist, toggle, 0);
-	if (toggle->t == 1)
-		file_dir_time_sort(search, exist, toggle, 0);
-	if (toggle->r == 1)
-		file_dir_reverse_sort(search, exist, toggle, 0);
+	sort_hub(search, toggle->exist, toggle, 0);
 	i = 0;
-	while (i < exist)
+	while (i < toggle->exist)
 	{
 		if (toggle->l == 1)
 			ls_long(search[i], toggle, 0, 0);

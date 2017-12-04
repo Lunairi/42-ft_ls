@@ -31,11 +31,17 @@ Day 5 (About 4 hours)
 - In Progress: -l, -R
 - Note: -l function has some specific format differences for when you do a regular item versus directory and how it's formatted. -R will be finalized at the end, trying to make -l as close to the same format as -l. -t was relatively quick, had to use timespec to get nanosecond for the most accurate copy, thanks to Stephen Gardner https://github.com/stephen-gardner for some tips and the right direction for some wonky behavior I was having with -t prior to using timespec.
 
-Day 6 (About 3 hours)
-- Completed: Basic output, basic sorting algorithm, sort hidden items, --help, customized flag system, -1, -a, -r, handle multiple argv, error handling for multi files/dir, -t, symbolic link, xattr
+Day 6 (About 6 hours)
+- Completed: Basic output, basic sorting algorithm, sort hidden items, --help, customized flag system, -1, -a, -r, handle multiple argv, error handling for multi files/dir, -t, symbolic link, xattr, -l, sort file before dir display
 - Incomplete: N/A
-- In Progress: -l, -R
-- Note: Finalized symbolic link reading, need to fix -l formatting and work on -R. May also do @ with listxattr afterwards
+- In Progress: -R
+- Note: Made alot of progress with completing a big portion of ls, it's almost done. I'd like to turn it in already but need to make -R happen, have it setup so it should theoretically work, time to test it out.
+
+Day 7 (About 5 hours)
+- Completed: Basic output, basic sorting algorithm, sort hidden items, --help, customized flag system, -1, -a, -r, handle multiple argv, error handling for multi files/dir, -t, symbolic link, xattr, -l, sort file before dir display, -R
+- Incomplete: N/A
+- In Progress: N/A
+- Note: Finally completed basic ls but there is a problem with optimization. Because I sort everything into a list than sort that humongous list individually for each flag my ls is very slow upon bigger directories. This can be fixed if I swapped my array into a linked list, however at this point for the project I've already invested 35 hours into ls and decided to move on. If I need a more optimized ls I will focus on that next time.
 
 New Functions Learning List:
 - ~opendir (studied and used)~
@@ -50,5 +56,5 @@ New Functions Learning List:
 - ~time (studied and used)~
 - ~ctime (studied and used)~
 - ~readlink (studied and used)~
-- perror (studied, not yet used)
-- strerror (studied, not yet used)
+- ~perror (studied, did not use)~
+- ~strerror (studied and used)~

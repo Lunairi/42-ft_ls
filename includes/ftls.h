@@ -28,6 +28,8 @@
 # include <pwd.h>
 # include <grp.h>
 # include <time.h>
+# include <errno.h>
+# include <string.h>
 
 # include "libft.h"
 
@@ -113,6 +115,8 @@ void					grab_format_file(char *str, char *file,
 int						mode_compare(int one, int two, t_flags *toggle);
 void					print_info_mode(char *str, char *dir,
 							t_flags *toggle);
+void					sort_hub(char **search, int exist,
+							t_flags *toggle, int i);
 
 /*
 ** long_process.c
@@ -141,5 +145,12 @@ int						time_sort_fd(char **search, int i, t_flags *toggle);
 ** permissions.c
 */
 char					*perms(int mode);
+
+/*
+** recursion.c
+*/
+void					file_dir_recursion(char **search, t_flags *toggle,
+							int i, int exist);
+void					dir_recursion(char **search, t_flags *toggle, int i);
 
 #endif

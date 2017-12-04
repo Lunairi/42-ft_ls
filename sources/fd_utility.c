@@ -12,6 +12,16 @@
 
 #include "ftls.h"
 
+void	sort_hub(char **search, int exist, t_flags *toggle, int i)
+{
+	file_dir_sort(search, toggle->exist, toggle, 0);
+	file_dir_alpha_sort(search, toggle->exist, toggle, 0);
+	if (toggle->t == 1)
+		file_dir_time_sort(search, toggle->exist, toggle, 0);
+	if (toggle->r == 1)
+		file_dir_reverse_sort(search, toggle->exist, toggle, 0);
+}
+
 void	print_info_mode(char *str, char *dir, t_flags *toggle)
 {
 	struct stat		items;
@@ -29,7 +39,7 @@ void	print_info_mode(char *str, char *dir, t_flags *toggle)
 		else
 			write(1, "\n", 1);
 		ft_printf("%s:\n", dir);
-		if (toggle->l == 1)
+		if (toggle->l == 1 && toggle->blocks > 0)
 			ft_printf("total %lli\n", toggle->blocks);
 	}
 	if (S_ISDIR(items.st_mode) && toggle->exist <= 1)
