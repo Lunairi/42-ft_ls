@@ -1,6 +1,8 @@
 # 42-ft_ls
 First unix/system branch project. Recreate ls functionality in terminal with C. In progress (because filler has binaries that doesn't work on my laptop while I'm in vegas sadly). Have no experience with anything in dirent.h library, lots of learning
 
+Completed: Future goal - Swap sorting algorithm and implement a faster quicksort, move my array into a linked list for faster data processing, move from working mostly on stack to some on heap and stack and better manage memory. (These are future improvements, will be done whenever I have a gap between projects, currently moving on to do other projects and learn more).
+
 Day 1 (About 3 hours)
 - Completed: N/A
 - Incomplete: -R, -t, basic sorting algorithm, sort hidden items, sort upper/lower
